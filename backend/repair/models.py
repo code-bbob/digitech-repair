@@ -23,8 +23,6 @@ class Repair(models.Model):
     due = models.IntegerField()
     received_date = models.DateField(default=datetime.now)
     received_by = models.CharField(max_length=30)
-    repair_parts = models.CharField(max_length=50)
-    repair_duration = models.CharField(max_length=10)
     repaired_by = models.CharField(max_length=30)
     delivery_date = models.DateField()
 
