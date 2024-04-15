@@ -9,7 +9,7 @@ class Repair(models.Model):
     customer_name = models.CharField(max_length=30)
     customer_phone_number = models.CharField(max_length=10)
     phone_model = models.CharField(max_length=30)   
-    repair_type = models.CharField(max_length=50)
+    repair_problem = models.CharField(max_length=50)
     repair_description = models.TextField()
     imei_number = models.CharField(max_length=30)
     model_number = models.CharField(max_length=30)
@@ -25,6 +25,7 @@ class Repair(models.Model):
     received_by = models.CharField(max_length=30)
     repaired_by = models.CharField(max_length=30)
     delivery_date = models.DateField()
+    repair_status = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         self.repair_id = self.generate_unique_repair_id()
