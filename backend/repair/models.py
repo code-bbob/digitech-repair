@@ -5,6 +5,18 @@ import string
 # Create your models here.
 
 class Repair(models.Model):
+
+    status_choices = [
+        ("Not repaired", "Not repaired"),
+        ("Repaired","Repaired"),
+        ("Unrepairable","Unrepairable"),
+    ]
+
+    accessory_choices = [
+        ("Present","Present"),
+        ("Absent","Absent"),
+    ]
+
     repair_id = models.CharField(max_length=8,blank=True)
     customer_name = models.CharField(max_length=30)
     customer_phone_number = models.CharField(max_length=10)
@@ -13,10 +25,10 @@ class Repair(models.Model):
     repair_description = models.TextField()
     imei_number = models.CharField(max_length=30)
     model_number = models.CharField(max_length=30)
-    sim_tray = models.BooleanField(default=1)
-    sim = models.BooleanField(default=0)
-    SD_card = models.BooleanField(default=0)
-    phone_cover = models.BooleanField(default=0)
+    sim_tray =models.CharField(max_length=20,choices=accessory_choices,default="Absent")
+    sim = models.CharField(max_length=20,choices=accessory_choices,default="Absent")
+    SD_card = models.CharField(max_length=20,choices=accessory_choices,default="Absent")
+    phone_cover = models.CharField(max_length=20,choices=accessory_choices,default="Absent")
     phone_condition = models.CharField(max_length=30)
     total_amount = models.IntegerField()
     advance_paid = models.IntegerField()
@@ -24,8 +36,8 @@ class Repair(models.Model):
     received_date = models.DateField(default=datetime.now)
     received_by = models.CharField(max_length=30)
     repaired_by = models.CharField(max_length=30)
-    delivery_date = models.DateField()
-    repair_status = models.BooleanField(default=False)
+    delivery_date = models.DateField(default=datetime.now)
+    repair_status=models.CharField(max_length=20,choices=status_choices,default="Not repaired")
 
     def save(self, *args, **kwargs):
         self.repair_id = self.generate_unique_repair_id()

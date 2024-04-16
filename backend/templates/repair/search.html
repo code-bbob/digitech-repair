@@ -1,0 +1,30 @@
+{% extends 'repair/layout.html' %}
+
+{% block title %}bibhab is great{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <h2 class="h1">Repairs:</h2>
+    <br />
+    <ol>
+      {% for repair in repairs %}
+      <a href = "bibhab">
+      <li class="bgcolor">
+        <div class="repair_item">
+          <h5 class="card-title">{{ repair.phone_model }} by {{ repair.customer_name }}</h5>
+          <h5 class="card-text">
+            ---        {{ repair.repair_problem | truncatechars:100 }}
+             
+          </h5>
+          <h5 class="card-text">Price:{{ repair.due }}</h5>
+          <h5 class="card-text">Status:{{ repair.repair_status }}</h5>
+        </div>
+      </li>
+    </a>
+      {% endfor %}
+    </ol>
+    </div>
+
+    
+{% endblock %}

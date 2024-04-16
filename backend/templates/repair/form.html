@@ -1,0 +1,25 @@
+{% extends 'repair/layout.html' %}
+
+{% block title %}
+bibhab the great
+{% endblock %}
+
+{% block body %}
+
+<div class="form-container">
+    <h3>Enter the specs of the repair.</h3>
+    <br><br>
+    <div>
+        <form action = "" method = "post">
+          {%csrf_token%}
+          {{form.as_p}}
+          <input type="submit">
+        </form>
+      </div>
+</div>
+
+<script>
+    
+</script>
+
+{% endblock %}

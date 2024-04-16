@@ -1,0 +1,57 @@
+{% extends 'repair/layout.html' %} {% block title %} duhhhhhh {% endblock %} {%
+{% block body %}
+<div class="receipt">
+  <div class="header">
+    <h1>Digitech Enterprises</h1>
+    <h5>Basundhara, Kathmandu</h5>
+  </div>
+  <br />
+  <div class="line">
+    <p><strong>Repair ID:</strong> {{ repair.repair_id }}</p>
+    <p><strong>Date:</strong> {{ repair.received_date }}</p>
+    <!-- Add other fields from the Repair model as needed -->
+  </div>
+
+  <div class="line">
+    <p><strong>Customer Name: </strong> {{ repair.customer_name }}</p>
+    <p><strong>Contact No.: </strong> {{ repair.customer_phone_number }}</p>
+    <p><strong>Phone Model: </strong> {{ repair.phone_model }}</p>
+  </div>
+
+  <div class="line">
+    <p><strong>IMEI No. </strong> {{ repair.imei_number }}</p>
+    <p><strong>Model No.: </strong> {{ repair.model_number }}</p>
+    <p><strong>Problem Reported:</strong> {{ repair.repair_problem }}</p>
+  </div>
+  <p class="center"><strong>Accessories Details:</strong></p>
+
+  <div class="box">
+    <div class="line">
+      <p><strong>Sim card:</strong> {{ repair.get_sim_display }}</p>
+    </div>
+    <div class="line">
+      <p><strong>Sim tray:</strong> {{ repair.get_sim_tray_display }}</p>
+    </div>
+    <div class="line">
+      <p><strong>SD card:</strong> {{ repair.get_SD_card_display }}</p>
+    </div>
+    <div class="line">
+      <p><strong>Phone Cover:</strong> {{ repair.get_phone_cover_display }}</p>
+    </div>
+  </div>
+<br>
+  <div class="line">
+    <p style="text-align:left;"><strong>Received By: </strong> {{ repair.received_by }}</p>
+    <p style="text-align:left;"><strong>Phone Condition: </strong> {{ repair.phone_condition }}</p>
+    <p style="text-align:right;"><strong>Total amount: </strong> {{ repair.total_amount }}</p>
+  </div>
+  <p style="text-align:right;"><strong>Advanced paid: </strong> {{ repair.total_amount }}</p>
+  <p style="text-align:right;"><strong>Due Total: </strong> {{ repair.total_amount }}</p>
+  <p>.......................................</p>
+
+  <div class="footer">
+    <p>Thank you for choosing our Digitech!</p>
+  </div>
+</div>
+
+{% endblock %}
