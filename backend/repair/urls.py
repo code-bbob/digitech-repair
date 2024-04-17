@@ -8,5 +8,6 @@ urlpatterns = [
     path('search/', views.Search, name='search'),
     path('form/', views.Form, name='form'),
     path('product/<str:repair_id>',views.Product, name='product'),
+    path('pdf/<str:repair_id>',views.Pdf, name='pdf')
 
 ]

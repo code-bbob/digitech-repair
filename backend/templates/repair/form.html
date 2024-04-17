@@ -13,13 +13,22 @@ bibhab the great
         <form action = "" method = "post">
           {%csrf_token%}
           {{form.as_p}}
-          <input type="submit">
+          <script>
+            function calculateTotal() {
+                var totalAmount = parseFloat(document.getElementById('id_total_amount').value);
+                var advancePaid = parseFloat(document.getElementById('id_advance_paid').value);
+                var due = totalAmount - advancePaid;
+                document.getElementById('id_due').value = due;
+            }
+    
+            document.getElementById('id_total_amount').addEventListener('input', calculateTotal);
+            document.getElementById('id_advance_paid').addEventListener('input', calculateTotal);
+        </script>
+          <input type="submit" style="background-color:black;">
         </form>
       </div>
 </div>
 
-<script>
-    
-</script>
+
 
 {% endblock %}

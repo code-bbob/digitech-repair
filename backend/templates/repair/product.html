@@ -1,4 +1,4 @@
-{% extends 'repair/layout.html' %} {% block title %} duhhhhhh {% endblock %} {%
+{% extends 'repair/layout.html' %} {% block title %} duhhhhhh {% endblock %}
 {% block body %}
 <div class="receipt">
   <div class="header">
@@ -27,30 +27,34 @@
 
   <div class="box">
     <div class="line">
-      <p><strong>Sim card:</strong> {{ repair.get_sim_display }}</p>
+        <p><strong>Sim card:</strong> {{ repair.get_sim_display }}</p>
     </div>
     <div class="line">
-      <p><strong>Sim tray:</strong> {{ repair.get_sim_tray_display }}</p>
+        <p><strong>Sim tray:</strong> {{ repair.get_sim_tray_display }}</p>
     </div>
     <div class="line">
-      <p><strong>SD card:</strong> {{ repair.get_SD_card_display }}</p>
+        <p><strong>SD card:</strong> {{ repair.get_SD_card_display }}</p>
     </div>
     <div class="line">
-      <p><strong>Phone Cover:</strong> {{ repair.get_phone_cover_display }}</p>
+        <p><strong>Phone Cover:</strong> {{ repair.get_phone_cover_display }}</p>
     </div>
-  </div>
+</div>
+
 <br>
   <div class="line">
     <p style="text-align:left;"><strong>Received By: </strong> {{ repair.received_by }}</p>
     <p style="text-align:left;"><strong>Phone Condition: </strong> {{ repair.phone_condition }}</p>
     <p style="text-align:right;"><strong>Total amount: </strong> {{ repair.total_amount }}</p>
   </div>
-  <p style="text-align:right;"><strong>Advanced paid: </strong> {{ repair.total_amount }}</p>
-  <p style="text-align:right;"><strong>Due Total: </strong> {{ repair.total_amount }}</p>
+  <p style="text-align:right;"><strong>Advanced paid: </strong> {{ repair.advance_paid }}</p>
+  <p style="text-align:right;"><strong>Due Total:  {{ repair.due }} </strong></p>
+  <div class="line">
   <p>.......................................</p>
+<p><strong>Delivery by: </strong> {{ repair.delivery_date }}</p>
+  </div>
 
   <div class="footer">
-    <p>Thank you for choosing our Digitech!</p>
+    <p><strong>Thank you for choosing our Digitech!</strong></p>
   </div>
 </div>
 

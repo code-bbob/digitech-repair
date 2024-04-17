@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .receipt {
+      width: 80%;
+      margin: 20px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+
+    h1, h5 {
+      text-align: center;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .line {
+      display: block;
+      width: 100%;
+      white-space: nowrap;
+    }
+
+    .line > * {
+      display: inline-block;
+      width: 45%;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .box {
+      display: block;
+      border: 1px solid black;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .box > * {
+      display: block;
+      margin: 5px;
+      padding: 5px;
+    }
+
+    .check {
+      display: inline-block;
+      margin: 0 3px;
+      padding: 0 3px;
+      border: 1px solid black;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .justify {
+      text-align: justify;
+    }
+    
+    .line > span {
+      width: 33.33%;
+      display: inline-block;
+    }
+    
+    .line .justify {
+      text-align: justify;
+      white-space: normal;
+    }
+  </style>
+  <title>Pdf</title>
+</head>
+<body>
+<div class="receipt">
+  <div class="header">
+    <h1>Digitech Enterprises</h1>
+    <h5>Basundhara, Kathmandu</h5>
+  </div>
+  <br />
+  <div class="line">
+    <span><strong>Repair ID:</strong> {{ repair.repair_id }}</span>
+    <span><strong>Date:</strong> {{ repair.received_date }}</span>
+    <!-- Add other fields from the Repair model as needed -->
+  </div>
+
+  <div class="line">
+    <span><strong>Customer Name: </strong> {{ repair.customer_name }}</span>
+    <span><strong>Contact No.: </strong> {{ repair.customer_phone_number }}</span>
+    <span><strong>Phone Model: </strong> {{ repair.phone_model }}</span>
+  </div>
+
+  <div class="line">
+    <span><strong>IMEI No. </strong> {{ repair.imei_number }}</span>
+    <span><strong>Model No.: </strong> {{ repair.model_number }}</span>
+    <span><strong>Problem Reported:</strong> {{ repair.repair_problem }}</span>
+  </div>
+  <p class="center"><strong>Accessories Details:</strong></p>
+
+  <div class="box">
+    <div class="line">
+      <span><strong>Sim card:</strong> {{ repair.get_sim_display }}</span>
+    </div>
+    <div class="line">
+      <span><strong>Sim tray:</strong> {{ repair.get_sim_tray_display }}</span>
+    </div>
+    <div class="line">
+      <span><strong>SD card:</strong> {{ repair.get_SD_card_display }}</span>
+    </div>
+    <div class="line">
+      <span><strong>Phone Cover:</strong> {{ repair.get_phone_cover_display }}</span>
+    </div>
+  </div>
+
+  <br>
+  <div class="line justify">
+    <span><strong>Received By: </strong> {{ repair.received_by }}</span>
+    <span><strong>Phone Condition: </strong> {{ repair.phone_condition }}</span>
+    <span><strong>Total amount: </strong> {{ repair.total_amount }}</span>
+  </div>
+  <p style="text-align:right;"><strong>Advanced paid: </strong> {{ repair.advance_paid }}</p>
+  <p style="text-align:right;"><strong>Due Total:  {{ repair.due }} </strong></p>
+  <div class="line">
+    <span>.......................................</span>
+    <span><strong>Delivery by: </strong> {{ repair.delivery_date }}</span>
+  </div>
+
+  <div class="footer">
+    <p><strong>Thank you for choosing our Digitech!</strong></p>
+  </div>
+</div>
+</body>
+</html>

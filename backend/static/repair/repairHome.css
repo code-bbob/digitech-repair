@@ -47,12 +47,16 @@ body {
 }
 
 .h1{
+  display: flex;
   padding: 5px;
   color:black;
   align-items: center;
   justify-content: center;
 }
 .navbar {
+
+  position: sticky;
+  top: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -61,6 +65,8 @@ body {
   display: flex;
   padding: 1rem 3rem;
   border-bottom: 1px solid #0007;
+  background-color: #fff;
+
 }
 
 .Title {
@@ -143,6 +149,12 @@ body {
   
 }
 
+
+.head{
+  display: flex;
+  margin-left: 30px;
+}
+
 .repair_item{
   padding: 5px;
   display: flex;
@@ -160,6 +172,9 @@ body {
 
 .repair_item > * {
   margin: 10px; /* Adjust the margin value as needed */
+  width: 900px;
+  /* background-color: black; */
+  
 
 }
 
@@ -169,11 +184,11 @@ a{
 }
 
 .card-title{
-  width: 200px;
+  width: 300px;
 }
 
 .card-text{
-  width: 100px;
+  width: 200px;
 }
 
 
@@ -187,6 +202,7 @@ a{
   border-radius: 5px;
   background-color: #f9f9f9;
   margin-top: 20px;
+  text-align: center;
 }
 
 .form-container h3 {
@@ -283,18 +299,6 @@ h1,h5 {
   text-align: center;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-}
-
-table,th, td {
-  border-bottom: 1px solid black;
-  padding: 8px;
-  text-align: left;
-}
-
 .footer {
   text-align: center;
   margin-top: 20px;
@@ -331,4 +335,26 @@ table,th, td {
   padding-left: 3px;
   padding-right: 3px;
   border: 1px solid black;
+}
+
+
+.btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  height: 60px; 
+  width: 60px; 
+  padding: 15px; /* Adjust padding if needed */
+  font-size: 30px; 
+  background-color: black;
+  color: white;
+  text-decoration: none;
+  border-radius: 50%; /* Make it circular */
+  z-index: 1000;
+}
+
+.btn:hover {
+  color: #212529;
+  background-color: #7f81eb;
+  text-decoration: none;
 }
