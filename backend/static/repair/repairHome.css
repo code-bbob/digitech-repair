@@ -143,7 +143,7 @@ body {
 .container{
   display: flex;
   flex-direction: column;
-  margin-top: 5rem;
+  margin-top: 50px;
   border: 2px solid #000;
   padding: 30px;
   
@@ -339,9 +339,7 @@ h1,h5 {
 
 
 .btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
+  
   height: 60px; 
   width: 60px; 
   padding: 15px; /* Adjust padding if needed */
@@ -353,6 +351,23 @@ h1,h5 {
   z-index: 1000;
 }
 
+#print{
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+#edit{
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+}
+
+#post{
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
 .btn:hover {
   color: #212529;
   background-color: #7f81eb;

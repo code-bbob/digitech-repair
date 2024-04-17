@@ -7,7 +7,9 @@ urlpatterns = [
     path('', views.RepairHome, name='Repairhome'),
     path('search/', views.Search, name='search'),
     path('form/', views.Form, name='form'),
+    path('updateform/<str:repair_id>', views.UpdateForm, name='updateform'),
     path('product/<str:repair_id>',views.Product, name='product'),
-    path('pdf/<str:repair_id>',views.Pdf, name='pdf')
+    path('print/<str:repair_id>',views.Print, name='pdf'),
+
 
 ]

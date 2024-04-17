@@ -40,7 +40,8 @@ class Repair(models.Model):
     repair_status=models.CharField(max_length=20,choices=status_choices,default="Not repaired")
 
     def save(self, *args, **kwargs):
-        self.repair_id = self.generate_unique_repair_id()
+        if not self.pk:  # Check if the instance is new
+            self.repair_id = self.generate_unique_repair_id()
         super(Repair, self).save(*args, **kwargs)
 
     def generate_unique_repair_id(self,length=8):
