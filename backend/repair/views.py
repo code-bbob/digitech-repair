@@ -17,12 +17,12 @@ def Search(request):
     else:
         repair_customer_name= Repair.objects.filter(customer_name__icontains=query)
         repair_phone_model= Repair.objects.filter(phone_model__icontains=query)
-        repair_id =Repair.objects.filter(repair_id__icontains=query)
+        repair_id =Repair.objects.filter(repair_id__exact=query)
         repair_customer_phone_number = Repair.objects.filter(customer_phone_number__icontains=query)
         repairs=  repair_customer_name.union(repair_customer_phone_number,repair_phone_model,repair_id)
 
-        if repairs.count()==0:
-            return HttpResponse( "No search results found. Please refine your query.")
+        # if repairs.count()==0:
+        #     return HttpResponse( "No search results found. Please refine your query.")
 
         params = {'repairs':repairs, 'query':query}
         return render(request, 'repair/search.html', params)

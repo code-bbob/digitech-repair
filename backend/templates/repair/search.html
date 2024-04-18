@@ -3,13 +3,16 @@
 {% block title %}bibhab is great{% endblock %}
 
 {% block body %}
+{% if not repairs == 0 %}
+      <h1 style="margin:100px;">No repairs found</h1>
+      {% else %}
 
 <div class="container">
     <h2 class="h1">Repairs:</h2>
     <br />
     <ol>
       {% for repair in repairs %}
-      <a href = "bibhab">
+      <a href = "/repair/product/{{repair.repair_id}}">
       <li class="bgcolor">
         <div class="repair_item">
           <h5 class="card-title">{{ repair.phone_model }} by {{ repair.customer_name }}</h5>
@@ -23,8 +26,9 @@
       </li>
     </a>
       {% endfor %}
+
     </ol>
     </div>
-
+    {% endif %}
     
 {% endblock %}
