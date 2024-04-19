@@ -189,6 +189,7 @@ a{
 
 .card-text{
   width: 200px;
+  display:flex;
 }
 
 
@@ -403,4 +404,15 @@ h1,h5 {
 .current {
   margin: 0 10px;
   font-weight: bold;
+}
+
+
+.a-child input[type="number"] {
+  /* Add your styles here */
+  padding: 5px;
+  margin-bottom: 10px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
