@@ -1,14 +1,23 @@
 from django.shortcuts import render, HttpResponse, redirect 
 from .models import Repair
-from .forms import RepairForm
+from .forms import RepairForm, SubmitForm
 from django.http import HttpResponse
+from django.core.paginator import Paginator
 
 
 def RepairHome(request):
-    repairs = Repair.objects.all().order_by('-id')
-    context = {'repairs':repairs}
-    return render(request,'repair/home.html', context)
 
+    form = SubmitForm()
+    if request.method == 'GET':
+        repairs = Repair.objects.exclude(repair_status="Completed").order_by('-id')
+        paginator = Paginator(repairs, 10)
+        page_number = request.GET.get("page")
+        page_obj = paginator.get_page(page_number)
+        context = {'page_obj': page_obj,'form': form}
+        return render(request,'repair/home.html', context)
+
+    else:
+        pass
 
 def Search(request):
     query = request.GET['query']
@@ -36,6 +45,22 @@ def Form(request):
         if form.is_valid():
             repair =form.save()
             return redirect(f'/repair/product/{repair.repair_id}')
+    context = {'form':form}
+    return render(request,'repair/form.html', context)
+
+def CompleteForm(request,repair_id):
+    repair = Repair.objects.get(repair_id=repair_id)
+    form = SubmitForm(instance=repair)
+
+    if request.method == 'POST':
+        form = SubmitForm(request.POST, instance=repair)
+        if form.is_valid():
+            repair.repair_status = 'Completed'
+            repair = form.save()
+            return redirect('/repair/')
+        else:
+             return HttpResponse('Form is not valid')
+
     context = {'form':form}
     return render(request,'repair/form.html', context)
 

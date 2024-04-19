@@ -23,7 +23,7 @@
       justify-content: space-between;
     }
     .line > * {
-      width: 200px;
+      width: 280px;
     }
     .center {
       text-align: center;
@@ -63,19 +63,19 @@
       <h1>Digitech Enterprises</h1>
       <h5>Basundhara, Kathmandu</h5>
     </div>
-    <div class="line">
+    <div class="print-line">
       <p><strong>Repair ID:</strong> {{ repair.repair_id }}</p>
       <p><strong>Date:</strong> {{ repair.received_date }}</p>
       <!-- Add other fields from the Repair model as needed -->
     </div>
   
-    <div class="line">
+    <div class="print-line">
       <p><strong>Customer Name: </strong> {{ repair.customer_name }}</p>
       <p><strong>Contact No.: </strong> {{ repair.customer_phone_number }}</p>
       <p><strong>Phone Model: </strong> {{ repair.phone_model }}</p>
     </div>
   
-    <div class="line">
+    <div class="print-line">
       <p><strong>IMEI No. </strong> {{ repair.imei_number }}</p>
       <p><strong>Model No.: </strong> {{ repair.model_number }}</p>
       <p><strong>Problem Reported:</strong> {{ repair.repair_problem }}</p>
@@ -98,13 +98,13 @@
   </div>
   
   <br>
-    <div class="line">
+    <div class="print-line">
       <p style="text-align:left;"><strong>Received By: </strong> {{ repair.received_by }}</p>
       <p style="text-align:left;"><strong>Phone Condition: </strong> {{ repair.phone_condition }}</p>
       <p style="text-align:right;"><strong>Total amount: </strong> {{ repair.total_amount }}</p>
     </div>
     <p style="text-align:right;"><strong>Advanced paid: </strong> {{ repair.advance_paid }}</p>
-    <div class="line">
+    <div class="print-line">
     <p>.......................................</p>
   <p><strong>Delivery by: </strong> {{ repair.delivery_date }}</p>
   <p style="text-align:right;"><strong>Due Total:  {{ repair.due }} </strong></p>
@@ -116,19 +116,19 @@
       <h1>Digitech Enterprises</h1>
       <h5>Basundhara, Kathmandu</h5>
     </div>
-    <div class="line">
+    <div class="print-line">
       <p><strong>Repair ID:</strong> {{ repair.repair_id }}</p>
       <p><strong>Date:</strong> {{ repair.received_date }}</p>
       <!-- Add other fields from the Repair model as needed -->
     </div>
   
-    <div class="line">
+    <div class="print-line">
       <p><strong>Customer Name: </strong> {{ repair.customer_name }}</p>
       <p><strong>Contact No.: </strong> {{ repair.customer_phone_number }}</p>
       <p><strong>Phone Model: </strong> {{ repair.phone_model }}</p>
     </div>
   
-    <div class="line">
+    <div class="print-line">
       <p><strong>IMEI No. </strong> {{ repair.imei_number }}</p>
       <p><strong>Model No.: </strong> {{ repair.model_number }}</p>
       <p><strong>Problem Reported:</strong> {{ repair.repair_problem }}</p>
@@ -151,13 +151,13 @@
   </div>
   
   <br>
-    <div class="line">
+    <div class="print-line">
       <p style="text-align:left;"><strong>Received By: </strong> {{ repair.received_by }}</p>
       <p style="text-align:left;"><strong>Phone Condition: </strong> {{ repair.phone_condition }}</p>
       <p style="text-align:right;"><strong>Total amount: </strong> {{ repair.total_amount }}</p>
     </div>
     <p style="text-align:right;"><strong>Advanced paid: </strong> {{ repair.advance_paid }}</p>
-    <div class="line">
+    <div class="print-line">
     <p>.......................................</p>
   <p><strong>Delivery by: </strong> {{ repair.delivery_date }}</p>
   <p style="text-align:right;"><strong>Due Total:  {{ repair.due }} </strong></p>

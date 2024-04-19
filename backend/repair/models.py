@@ -10,6 +10,7 @@ class Repair(models.Model):
         ("Not repaired", "Not repaired"),
         ("Repaired","Repaired"),
         ("Unrepairable","Unrepairable"),
+        ("Completed","Completed")
     ]
 
     accessory_choices = [
@@ -38,6 +39,7 @@ class Repair(models.Model):
     repaired_by = models.CharField(max_length=30,null=True, blank=True)
     delivery_date = models.DateField(default=datetime.now)
     repair_status=models.CharField(max_length=20,choices=status_choices,default="Not repaired")
+    amount_paid = models.IntegerField(default=0,null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if not self.pk:  # Check if the instance is new

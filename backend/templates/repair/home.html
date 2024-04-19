@@ -16,11 +16,12 @@
       </p>
       <p class="card-text"><strong>Price:</strong></p>
       <p class="card-text"><strong>Status:</strong></p>
+      <p class="card-text"><strong>Paid:</strong></p>
     </div>
   </div>
   <ol>
-    {% for repair in repairs %}
-    <a href="/repair/product/{{repair.repair_id}}">
+    {% for repair in page_obj %}
+    <a href="/repair/product/{{repair.repair_id}}" id="anchor">
       <li>
         <div class="repair_item">
           <p class="card-title">
@@ -31,17 +32,51 @@
           </p>
           <p class="card-text">Price:{{ repair.due }}</p>
           <p class="card-text">{{ repair.repair_status }}</p>
+          <form action="completeform/{{repair.repair_id}}" method="post">
+            {% csrf_token %}
+            <div id ="a-child">
+            {{form.as_p}}
+            </div>
+            <input type="submit" style="background-color:black;">
+          </form>
         </div>
       </li>
     </a>
     {% endfor %}
   </ol>
+  <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; First</a>
+            <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
   <div>
     <a href="/repair/form/" class="btn" id="post"><i class="fa fa-plus"></i></a>
   </div>
 </div>
 <br />
 
+<script>
+  const anchor = document.getElementById('anchor');
+  const div = document.getElementById('a-child');
 
+
+  // Optional: Add a click event listener to the div to prevent default behavior
+  div.addEventListener('click', function(event) {
+      event.preventDefault();
+      console.log('Div clicked');
+  });
+</script>
 
 {% endblock %}

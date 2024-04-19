@@ -373,3 +373,34 @@ h1,h5 {
   background-color: #7f81eb;
   text-decoration: none;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.step-links {
+  display: flex;
+  align-items: center;
+}
+
+.step-links a {
+  color: #333;
+  text-decoration: none;
+  padding: 5px 10px;
+  margin: 0 5px;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+  transition: background-color 0.3s;
+}
+
+.step-links a:hover {
+  background-color: #ddd;
+}
+
+.current {
+  margin: 0 10px;
+  font-weight: bold;
+}
