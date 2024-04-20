@@ -3,6 +3,7 @@ from .models import Repair
 from .forms import RepairForm, SubmitForm
 from django.http import HttpResponse
 from django.core.paginator import Paginator
+from django.contrib.auth import authenticate, login
 
 
 def RepairHome(request):
@@ -56,21 +57,27 @@ def Form(request):
     context = {'form':form}
     return render(request,'repair/form.html', context)
 
-def CompleteForm(request,repair_id):
+def CompleteForm(request,repair_id,condition):
     repair = Repair.objects.get(repair_id=repair_id)
     form = SubmitForm(instance=repair)
-
     if request.method == 'POST':
-        form = SubmitForm(request.POST, instance=repair)
-        if form.is_valid():
-            repair.repair_status = 'Completed'
-            repair = form.save()
+        if condition == 'paid':
+            form = SubmitForm(request.POST, instance=repair)
+            if form.is_valid():
+                repair.repair_status = 'Completed'
+                repair = form.save()
+                return redirect('/repair/')
+            else:
+                return HttpResponse('Form is not valid')
+        elif condition == 'repaired':
+            repair.repair_status = 'Unrepairable'
+            print(repair.repair_status)
+            print("########################")
+            repair.save()
             return redirect('/repair/')
-        else:
-             return HttpResponse('Form is not valid')
-
-    context = {'form':form}
-    return render(request,'repair/form.html', context)
+    else:
+        context = {'form':form}
+        return render(request,'repair/form.html', context)
 
 def UpdateForm(request, repair_id):
     repair = Repair.objects.get(repair_id=repair_id)
@@ -98,3 +105,16 @@ def Print(request,repair_id):
     return render(request,'repair/print.html', {'repair':repair})
 
     
+def Login(request):
+    if request.method == 'POST':
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('/')
+            ...
+        else:
+            return HttpResponse("Invalid login")
+    elif request.method == 'GET':
+        return render(request,'repair/login.html')

@@ -38,8 +38,21 @@
             {{ repair.repair_problem | truncatechars:100 }}
           </p>
           <p class="card-text">Price:{{ repair.due }}</p>
-          <p class="card-text">{{ repair.repair_status }}</p>
-          <form action="completeform/{{repair.repair_id}}" method="post" class="card-text">
+          <div class="card-text">
+          <p >{{ repair.repair_status }}</p>
+          <form action="completeform/{{repair.repair_id}}/repaired" method="post" class="card-text">
+          {% csrf_token %}
+          <button type="submit" style="
+            background-color:blue;
+            color:white;
+            height:30px;
+            margin:5px;
+            width:40px;
+            "
+             onclick="return confirm('Are you sure you want to confirm?');">Done</a>
+            </form>
+            </div>
+          <form action="completeform/{{repair.repair_id}}/paid" method="post" class="card-text">
             {% csrf_token %}
             <div class ="a-child">
               {% for field in form %}
@@ -146,7 +159,7 @@
           </p>
           <p class="card-text">Price:{{ repair.due }}</p>
           <p class="card-text">{{ repair.repair_status }}</p>
-          <form action="completeform/{{repair.repair_id}}" method="post" class="card-text">
+          <form action="completeform/{{repair.repair_id}}/paid" method="post" class="card-text">
             {% csrf_token %}
             <div class ="a-child">
               {% for field in form %}

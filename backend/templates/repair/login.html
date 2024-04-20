@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Bugbusters</title>
+  {% load static %}
+
+  <!--               Linking files here..
+                  -----------------------                                         -->
+
+  <link rel="stylesheet" type="text/css" href="{% static 'home/form.css' %}">  <!-- use djago {} to load static files else it is looking for signup/templates so error is gona pop up-->
+  <link rel="stylesheet" type="text/css" href="{% static 'home/Form-animate.css' %}">
+  <script src="{% static 'home/form.js' %}"></script>
+                                
+  <!--             Linking Icon-Fonts here...               
+                 ----------------------------                                   -->
+
+  <script src="https://kit.fontawesome.com/8f9c41fe8d.js" crossorigin="anonymous"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <!--             Linking Text-fonts here...
+                ----------------------------                                    -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lobster&family=Lobster+Two:wght@700&family=Roboto+Slab:wght@500&family=Sofia&display=swap"
+    rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300&family=Lobster+Two&family=Roboto&family=Ubuntu:wght@500&display=swap"
+    rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300&family=Lobster+Two&family=Roboto&family=Roboto+Slab:wght@600&family=Ubuntu:wght@500&display=swap"
+    rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap" rel="stylesheet">
+
+  <!--               Let's Begin the </>               
+                       ---------------------                                            -->
+
+</head>
+
+<body>
+
+  <div class="box">
+    <form name="form" method="POST">
+      {% csrf_token %}
+      <div class="img-container"></div>
+      <div class="container">
+        <h1 class="title anim-typewriter">Welcome</h1>
+        <div class="area">
+
+          <!--                Username - Box                    
+                     ---------------------                                                   -->
+
+          <div class="textbox">
+
+            <div class="hidden"><i class="fa-solid fa-user fa-lg"></i></div>
+            <i class="fa-regular  fa-user fa-lg"></i>
+            <input type="text" class="top" name="username" autocomplete="off" required>
+            <label class="name">Username</label>
+
+          </div>
+
+          <!--                 E-mail - Box             
+                    ---------------                                                   -->
+
+          <div class="textbox">
+
+            <div class="hidden"><i class="fa-solid fa-envelope fa-lg"></i></div>
+            <div class="not-hidden"><i class="fa-regular fa-envelope fa-lg"></i></div>
+            <input class="top" autocomplete="off" placeholder=" " required>
+            <label class="email">E-mail</label>
+
+          </div>
+
+          <!--               Password - Box
+                 -------------------                                                -->
+
+          <div class="textbox">
+
+            <i class="fa-solid fa-lock fa-lg"></i>
+            <input type="password" name="password" class="top" autocomplete="off" required>
+            <i class="far fa-eye-slash " id="hide" onclick="SeePw()"></i>
+            <i class="fa fa-eye" id="see" onclick="SeePw()"></i>
+            <code id="code">Show password</code>
+            <label class="password" id="label">Password</label>
+
+          </div>
+
+          <!--                Submit-Button
+                   ---------------                                                    -->
+          <input type="submit" value="Login" class="btn"></input>
+
+        </div>
+      </div>
+      <hr><br>
+
+      <!--              Bottom of the Line          
+                ----------------------                                             -->
+
+      <a href="#" class="fp">Forgot Password?</a>
+      <p>Don't have an account?</p>
+      <a href="/signup" class="btn-cn"><button type="button" class="btn-cn">Create
+          Now</button></a>
+    </form>
+  </div>
+
+
+</body>
+
+</html>
