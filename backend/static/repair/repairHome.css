@@ -416,3 +416,15 @@ h1,h5 {
   border-radius: 4px;
   box-sizing: border-box;
 }
+
+.rect {
+  background-color: black;
+  color: white;
+  padding: 10px 20px; /* Add padding for better button appearance */
+  border: none; /* Remove default button border */
+  cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+.rect:hover {
+  background-color: darkgray; /* Change background color on hover */
+}

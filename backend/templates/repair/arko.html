@@ -6,6 +6,11 @@
 <div class="container">
   <h2 class="h1">Repairs:</h2>
   <br />
+  <div>
+    <a href="#" class="rect" onclick="showRepairs('incomplete')">Incomplete Repairs</a>
+    <a href="#" class="rect" onclick="showRepairs('completed')">Completed Repairs</a>
+  </div>
+  <br>
   <div class="head">
     <div class="repair_item">
       <p class="card-title">
@@ -128,12 +133,6 @@
 
 
   <div>
-    <a href="#" onclick="showRepairs('incomplete')">Repaired Repairs</a>
-    <a href="#" onclick="showRepairs('completed')">Completed Repairs</a>
-  </div>
-
-
-  <div>
     <a href="/repair/form/" class="btn" id="post"><i class="fa fa-plus"></i></a>
   </div>
 </div>
@@ -157,6 +156,17 @@
     // Save the display state to local storage
     localStorage.setItem('repairListDisplay', id);
   }
+</script>
+
+
+<script>
+  const divs = document.querySelectorAll('.a-child');
+
+  divs.forEach(div => {
+    div.addEventListener('click', function(event) {
+      event.preventDefault();
+    });
+  });
 </script>
 
 {% endblock %}

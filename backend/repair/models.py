@@ -26,7 +26,7 @@ class Repair(models.Model):
     repair_description = models.TextField(null=True, blank=True)
     imei_number = models.CharField(max_length=30,null=True, blank=True)
     model_number = models.CharField(max_length=30,null=True, blank=True)
-    sim_tray =models.CharField(max_length=20,choices=accessory_choices,default="Absent")
+    sim_tray =models.CharField(max_length=20,choices=accessory_choices,default="Present")
     sim = models.CharField(max_length=20,choices=accessory_choices,default="Absent")
     SD_card = models.CharField(max_length=20,choices=accessory_choices,default="Absent")
     phone_cover = models.CharField(max_length=20,choices=accessory_choices,default="Absent")
