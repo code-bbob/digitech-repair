@@ -7,8 +7,10 @@
   <h2 class="h1">Repairs:</h2>
   <br />
   <div>
-    <a href="#" class="rect" onclick="showRepairs('incomplete')">Incomplete Repairs</a>
+    <a href="#" class="rect" onclick="showRepairs('incomplete')">Ongoing Repairs</a>
+    <a href="#" class="rect" onclick="showRepairs('repaired')">Call to customers</a>
     <a href="#" class="rect" onclick="showRepairs('completed')">Completed Repairs</a>
+
   </div>
   <br>
   <div class="head">
@@ -131,6 +133,59 @@
 
   </ol>
 
+  <ol id="repaired_repairs" style="display: {% if repair_list_display == 'incomplete' %}block{% else %}none{% endif %};">
+    {% for repair in repaired_page_obj %}
+    <a href="/repair/product/{{repair.repair_id}}" class="anchor">
+      <li>
+        <div class="repair_item">
+          <p class="card-title">
+            <strong>{{ repair.phone_model }}</strong> by {{ repair.customer_name }}
+          </p>
+          <p class="card-text">
+            {{ repair.repair_problem | truncatechars:100 }}
+          </p>
+          <p class="card-text">Price:{{ repair.due }}</p>
+          <p class="card-text">{{ repair.repair_status }}</p>
+          <form action="completeform/{{repair.repair_id}}" method="post" class="card-text">
+            {% csrf_token %}
+            <div class ="a-child">
+              {% for field in form %}
+              {{ field }}
+              {% endfor %}
+            </div>
+            <button type="submit"
+              style="
+              background-color:black;
+              color:white;
+              height:30px;
+              margin:5px;
+              "
+              onclick="return confirm('Are you sure you want to confirm?');"
+            >OK</button>
+          </form>
+        </div>
+      </li>
+    </a>
+    {% endfor %}
+    <div class="pagination">
+      <span class="step-links">
+        {% if repaired_page_obj.has_previous %}
+        <a href="?page=1">&laquo; First</a>
+        <a href="?page={{ repaired_page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span class="current">
+          Page {{ repaired_page_obj.number }} of {{ repaired_page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if repaired_page_obj.has_next %}
+        <a href="?page={{ repaired_page_obj.next_page_number }}">Next</a>
+        <a href="?page={{ repaired_page_obj.paginator.num_pages }}">Last &raquo;</a>
+        {% endif %}
+      </span>
+    </div>
+
+  </ol>
 
   <div>
     <a href="/repair/form/" class="btn" id="post"><i class="fa fa-plus"></i></a>

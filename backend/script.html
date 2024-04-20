@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Run Python Script</title>
+</head>
+<body>
+    <h1>Run Python Script</h1>
+    <button onclick="runPythonScript()">Run</button>
+
+    <script>
+        function runPythonScript() {
+            // Send an AJAX request to trigger the Python script execution
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "run_script.py", true);
+            xhr.send();
+        }
+    </script>
+</body>
+</html>

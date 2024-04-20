@@ -11,15 +11,17 @@ def RepairHome(request):
     if request.method == 'GET':
         repairs = Repair.objects.exclude(repair_status="Completed").order_by('-id')
         completed_repairs = Repair.objects.filter(repair_status="Completed").order_by('-id')
-        print(completed_repairs)
-        incomplete_repairs = Repair.objects.exclude(repair_status="Completed").order_by('-id')
+        incomplete_repairs = Repair.objects.filter(repair_status="Not repaired").order_by('-id')
+        print(incomplete_repairs)
         completed_paginator = Paginator(completed_repairs, 10)
+        repaired_repairs = Repair.objects.filter(repair_status="Repaired").order_by('-id')
+        repaired_paginator = Paginator(repaired_repairs,10)
         incomplete_paginator = Paginator(incomplete_repairs,10)
         page_number = request.GET.get("page")
         completed_page_obj = completed_paginator.get_page(page_number)
         incomplete_page_obj = incomplete_paginator.get_page(page_number)
-        print(completed_page_obj)
-        context = {'completed_page_obj': completed_page_obj,'incomplete_page_obj':incomplete_page_obj,'form': form}
+        repaired_page_obj = repaired_paginator.get_page(page_number)
+        context = {'completed_page_obj': completed_page_obj,'incomplete_page_obj':incomplete_page_obj,'repaired_page_obj':repaired_page_obj,'form': form}
         return render(request,'repair/arko.html', context)
 
     else:
