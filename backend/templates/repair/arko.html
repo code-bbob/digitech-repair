@@ -104,23 +104,7 @@
           </p>
           <p class="card-text">Price:{{ repair.due }}</p>
           <p class="card-text">{{ repair.repair_status }}</p>
-          <form action="completeform/{{repair.repair_id}}" method="post" class="card-text">
-            {% csrf_token %}
-            <div class ="a-child">
-              {% for field in form %}
-              {{ field }}
-              {% endfor %}
-            </div>
-            <button type="submit"
-              style="
-              background-color:black;
-              color:white;
-              height:30px;
-              margin:5px;
-              "
-              onclick="return confirm('Are you sure you want to confirm?');"
-            >OK</button>
-          </form>
+          <p class="card-text">{{ repair.amount_paid }}</p>
         </div>
       </li>
     </a>
