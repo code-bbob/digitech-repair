@@ -428,3 +428,11 @@ h1,h5 {
 .rect:hover {
   background-color: darkgray; /* Change background color on hover */
 }
+
+.flex{
+  display: flex;
+}
+
+.anchor {
+  display: flex;
+}

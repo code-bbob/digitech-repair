@@ -13,7 +13,6 @@ def RepairHome(request):
         repairs = Repair.objects.exclude(repair_status="Completed").order_by('-id')
         completed_repairs = Repair.objects.filter(repair_status="Completed").order_by('-id')
         incomplete_repairs = Repair.objects.filter(repair_status="Not repaired").order_by('-id')
-        print(incomplete_repairs)
         completed_paginator = Paginator(completed_repairs, 10)
         repaired_repairs = Repair.objects.filter(repair_status="Repaired").order_by('-id')
         repaired_paginator = Paginator(repaired_repairs,10)
@@ -57,6 +56,13 @@ def Form(request):
     context = {'form':form}
     return render(request,'repair/form.html', context)
 
+def UpdateStatus(request,repair_id):
+    repair = Repair.objects.get(repair_id=repair_id)
+    if repair.repair_status == 'Not repaired':
+        repair.repair_status = 'Repaired'
+        repair.save()
+    return redirect('/repair/')
+
 def CompleteForm(request,repair_id,condition):
     repair = Repair.objects.get(repair_id=repair_id)
     form = SubmitForm(instance=repair)
@@ -70,7 +76,7 @@ def CompleteForm(request,repair_id,condition):
             else:
                 return HttpResponse('Form is not valid')
         elif condition == 'repaired':
-            repair.repair_status = 'Unrepairable'
+            repair.repair_status = 'Repaired'
             print(repair.repair_status)
             print("########################")
             repair.save()
