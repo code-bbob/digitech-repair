@@ -4,13 +4,15 @@ from .forms import RepairForm, SubmitForm
 from django.http import HttpResponse
 from django.core.paginator import Paginator
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 
-
+@login_required(login_url='/login/')
 def RepairHome(request):
 
     form = SubmitForm()
     if request.method == 'GET':
         repairs = Repair.objects.exclude(repair_status="Completed").order_by('-id')
+        user=request.user
         completed_repairs = Repair.objects.filter(repair_status="Completed").order_by('-id')
         incomplete_repairs = Repair.objects.filter(repair_status="Not repaired").order_by('-id')
         completed_paginator = Paginator(completed_repairs, 10)
@@ -21,7 +23,9 @@ def RepairHome(request):
         completed_page_obj = completed_paginator.get_page(page_number)
         incomplete_page_obj = incomplete_paginator.get_page(page_number)
         repaired_page_obj = repaired_paginator.get_page(page_number)
-        context = {'completed_page_obj': completed_page_obj,'incomplete_page_obj':incomplete_page_obj,'repaired_page_obj':repaired_page_obj,'form': form}
+        groups = user.groups.all()
+        print(groups)
+        context = {'completed_page_obj': completed_page_obj,'incomplete_page_obj':incomplete_page_obj,'repaired_page_obj':repaired_page_obj,'form': form,'user':request.user,'groups':groups}
         return render(request,'repair/arko.html', context)
 
     else:
