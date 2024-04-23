@@ -6,15 +6,22 @@
 <div class="container">
   {% for group in groups %}
   {% if group.name == "Technician"%}
-  Hello {{user.username}}
+  Hello {{request.user.username}}
   {% endif %}
   {% endfor %}
+  <form method="GET" action="/repair/">
+    <label for="date">Select Date:</label>
+    <input type="date" id="date" name="date">
+    <button type="submit">Show Transactions</button>
+</form>
   <h2 class="h1">Repairs:</h2>
   <br />
   <div>
     <a href="#" class="rect" onclick="showRepairs('incomplete')">Ongoing Repairs</a>
     <a href="#" class="rect" onclick="showRepairs('repaired')">Call to customers</a>
     <a href="#" class="rect" onclick="showRepairs('completed')">Completed Repairs</a>
+    <a href="#" class="rect" onclick="showRepairs('unrepairable')">Unrepairable Repairs</a>
+
 
   </div>
   <br>
@@ -56,6 +63,17 @@
       "
       onclick="return confirm('Are you sure you want to confirm?');"
     > OK</a>
+    <a href="updatestatus/{{repair.repair_id}}/unrepairable" style="
+        display: block; /* Change to block-level element */
+        background-color: black;
+        color: white;
+        height: 30px;
+        padding: 5px;
+        margin: 5px;
+        width: 40px;
+      "
+      onclick="return confirm('Are you sure you want to confirm?');"
+    > NO</a>
   </div>
   <form action="completeform/{{repair.repair_id}}/paid" method="post" class="card-text">
     {% csrf_token %}
@@ -95,43 +113,6 @@
         {% endif %}
       </span>
     </div>
-  </ol>
-  <ol id="completed_repairs" style="display: {% if repair_list_display == 'completed' %}block{% else %}none{% endif %};">
-    {% for repair in completed_page_obj %}
-    <a href="/repair/product/{{repair.repair_id}}" class="anchor">
-      <li>
-        <div class="repair_item">
-          <p class="card-title">
-            <strong>{{ repair.phone_model }}</strong> by {{ repair.customer_name }}
-          </p>
-          <p class="card-text">
-            {{ repair.repair_problem | truncatechars:100 }}
-          </p>
-          <p class="card-text">Price:{{ repair.due }}</p>
-          <p class="card-text">{{ repair.repair_status }}</p>
-          <p class="card-text">{{ repair.amount_paid }}</p>
-        </div>
-      </li>
-    </a>
-    {% endfor %}
-    <div class="pagination">
-      <span class="step-links">
-        {% if completed_page_obj.has_previous %}
-        <a href="?page=1">&laquo; First</a>
-        <a href="?page={{ completed_page_obj.previous_page_number }}">Previous</a>
-        {% endif %}
-
-        <span class="current">
-          Page {{ completed_page_obj.number }} of {{ completed_page_obj.paginator.num_pages }}.
-        </span>
-
-        {% if completed_page_obj.has_next %}
-        <a href="?page={{ completed_page_obj.next_page_number }}">Next</a>
-        <a href="?page={{ completed_page_obj.paginator.num_pages }}">Last &raquo;</a>
-        {% endif %}
-      </span>
-    </div>
-
   </ol>
 
   <ol id="repaired_repairs" style="display: {% if repair_list_display == 'incomplete' %}block{% else %}none{% endif %};">
@@ -182,6 +163,82 @@
         {% if repaired_page_obj.has_next %}
         <a href="?page={{ repaired_page_obj.next_page_number }}">Next</a>
         <a href="?page={{ repaired_page_obj.paginator.num_pages }}">Last &raquo;</a>
+        {% endif %}
+      </span>
+    </div>
+
+  </ol>
+
+  <ol id="completed_repairs" style="display: {% if repair_list_display == 'completed' %}block{% else %}none{% endif %};">
+    {% for repair in completed_page_obj %}
+    <a href="/repair/product/{{repair.repair_id}}" class="anchor">
+      <li>
+        <div class="repair_item">
+          <p class="card-title">
+            <strong>{{ repair.phone_model }}</strong> by {{ repair.customer_name }}
+          </p>
+          <p class="card-text">
+            {{ repair.repair_problem | truncatechars:100 }}
+          </p>
+          <p class="card-text">Price:{{ repair.due }}</p>
+          <p class="card-text">{{ repair.repair_status }}</p>
+          <p class="card-text">{{ repair.amount_paid }}</p>
+        </div>
+      </li>
+    </a>
+    {% endfor %}
+    <div class="pagination">
+      <span class="step-links">
+        {% if completed_page_obj.has_previous %}
+        <a href="?page=1">&laquo; First</a>
+        <a href="?page={{ completed_page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span class="current">
+          Page {{ completed_page_obj.number }} of {{ completed_page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if completed_page_obj.has_next %}
+        <a href="?page={{ completed_page_obj.next_page_number }}">Next</a>
+        <a href="?page={{ completed_page_obj.paginator.num_pages }}">Last &raquo;</a>
+        {% endif %}
+      </span>
+    </div>
+
+  </ol>
+
+  <ol id="unrepairable_repairs" style="display: {% if repair_list_display == 'unrepairable' %}block{% else %}none{% endif %};">
+    {% for repair in unrepairable_page_obj %}
+    <a href="/repair/product/{{repair.repair_id}}" class="anchor">
+      <li>
+        <div class="repair_item">
+          <p class="card-title">
+            <strong>{{ repair.phone_model }}</strong> by {{ repair.customer_name }}
+          </p>
+          <p class="card-text">
+            {{ repair.repair_problem | truncatechars:100 }}
+          </p>
+          <p class="card-text">Price:{{ repair.due }}</p>
+          <p class="card-text">{{ repair.repair_status }}</p>
+          <p class="card-text">{{ repair.amount_paid }}</p>
+        </div>
+      </li>
+    </a>
+    {% endfor %}
+    <div class="pagination">
+      <span class="step-links">
+        {% if unrepairable_page_obj.has_previous %}
+        <a href="?page=1">&laquo; First</a>
+        <a href="?page={{ unrepairable_page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span class="current">
+          Page {{ unrepairable_page_obj.number }} of {{ unrepairable_page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if completed_page_obj.has_next %}
+        <a href="?page={{ unrepairable_page_obj.next_page_number }}">Next</a>
+        <a href="?page={{ unrepairable_page_obj.paginator.num_pages }}">Last &raquo;</a>
         {% endif %}
       </span>
     </div>
