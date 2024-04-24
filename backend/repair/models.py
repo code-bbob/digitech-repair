@@ -10,6 +10,7 @@ class Repair(models.Model):
         ("Not repaired", "Not repaired"),
         ("Repaired","Repaired"),
         ("Unrepairable","Unrepairable"),
+        ("Outrepaired", "Outrepaired"),
         ("Completed","Completed")
     ]
 

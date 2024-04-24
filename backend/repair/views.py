@@ -46,15 +46,18 @@ def RepairHometest(request):
             repaired_paginator = Paginator(repaired_repairs,10)
             unrepairable_repairs = Repair.objects.filter(repair_status="Unrepairable",received_date=date).order_by('-id')
             unrepairable_paginator = Paginator(unrepairable_repairs,10)
+            outrepaired_repairs = Repair.objects.filter(repair_status="Outrepaired",received_date=date).order_by('-id')
+            outrepaired_paginator = Paginator(outrepaired_repairs,10)
             page_number = request.GET.get("page")
             completed_page_obj = completed_paginator.get_page(page_number)
             incomplete_page_obj = incomplete_paginator.get_page(page_number)
             repaired_page_obj = repaired_paginator.get_page(page_number)
             unrepairable_page_obj = unrepairable_paginator.get_page(page_number)
+            outrepaired_page_obj = outrepaired_paginator.get_page(page_number)
             user = request.user
             groups = user.groups.all()
-            print(unrepairable_page_obj)
-            context = {'completed_page_obj': completed_page_obj,'incomplete_page_obj':incomplete_page_obj,'repaired_page_obj':repaired_page_obj,'unrepairable_page_obj':unrepairable_page_obj, 'form': form,'groups':groups}
+            print("88888888888888888888888888888",outrepaired_page_obj)
+            context = {'completed_page_obj': completed_page_obj,'incomplete_page_obj':incomplete_page_obj,'repaired_page_obj':repaired_page_obj,'unrepairable_page_obj':unrepairable_page_obj, 'outrepaired_page_obj':outrepaired_page_obj , 'form': form,'groups':groups}
             return render(request,'repair/arko.html', context)
         
         completed_repairs = Repair.objects.filter(repair_status="Completed").order_by('-id')
@@ -64,19 +67,22 @@ def RepairHometest(request):
         repaired_paginator = Paginator(repaired_repairs,10)
         incomplete_paginator = Paginator(incomplete_repairs,10)
         unrepairable_repairs = Repair.objects.filter(repair_status="Unrepairable").order_by('-id')
-        print(unrepairable_repairs)
+        outrepaired_repairs = Repair.objects.filter(repair_status="Outrepaired").order_by('-id')
+        outrepaired_paginator = Paginator(outrepaired_repairs,10)
         unrepairable_paginator = Paginator(unrepairable_repairs,10)
-        print(unrepairable_paginator)
+        print(outrepaired_paginator)
+        print(outrepaired_repairs)
         page_number = request.GET.get("page")
         completed_page_obj = completed_paginator.get_page(page_number)
         incomplete_page_obj = incomplete_paginator.get_page(page_number)
         repaired_page_obj = repaired_paginator.get_page(page_number)
         unrepairable_page_obj = unrepairable_paginator.get_page(page_number)
-        for repairss in unrepairable_page_obj:
+        outrepaired_page_obj = outrepaired_paginator.get_page(page_number)
+        for repairss in outrepaired_page_obj:
             print(repairss) 
         user = request.user
         groups = user.groups.all()
-        context = {'completed_page_obj': completed_page_obj,'incomplete_page_obj':incomplete_page_obj,'repaired_page_obj':repaired_page_obj,'unrepairable_page_obj':unrepairable_page_obj,'form': form,'groups':groups}
+        context = {'completed_page_obj': completed_page_obj,'incomplete_page_obj':incomplete_page_obj,'repaired_page_obj':repaired_page_obj,'unrepairable_page_obj':unrepairable_page_obj,'outrepaired_page_obj':outrepaired_page_obj,'form': form,'groups':groups}
         return render(request,'repair/arko.html', context)
 
     else:
@@ -117,12 +123,14 @@ def UpdateStatus(request,repair_id,status):
         repair = Repair.objects.get(repair_id=repair_id)
         if repair.repair_status == 'Not repaired':
             repair.repair_status = 'Repaired'
+            repair.save()
+            return redirect('/repair/')
     elif status == 'unrepairable':
         repair = Repair.objects.get(repair_id=repair_id)
         if repair.repair_status == 'Not repaired':
             repair.repair_status = 'Unrepairable'
-        repair.save()
-        return redirect('/repair/')
+            repair.save()
+            return redirect('/repair/')
     else:
         return HttpResponse("NOT VALID CONTACT BBOB THE GREAT")
 

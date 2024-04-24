@@ -19,6 +19,7 @@
   <div>
     <a href="#" class="rect" onclick="showRepairs('incomplete')">Ongoing Repairs</a>
     <a href="#" class="rect" onclick="showRepairs('repaired')">Call to customers</a>
+    <a href="#" class="rect" onclick="showRepairs('outrepaired')">Repair Outside</a>
     <a href="#" class="rect" onclick="showRepairs('completed')">Completed Repairs</a>
     <a href="#" class="rect" onclick="showRepairs('unrepairable')">Unrepairable Repairs</a>
 
@@ -113,6 +114,60 @@
         {% endif %}
       </span>
     </div>
+  </ol>
+
+  <ol id="outrepaired_repairs" style="display: {% if repair_list_display == 'outrepaired' %}block{% else %}none{% endif %};">
+    {% for repair in outrepaired_page_obj %}
+    <a href="/repair/product/{{repair.repair_id}}" class="anchor">
+      <li>
+        <div class="repair_item">
+          <p class="card-title">
+            <strong>{{ repair.phone_model }}</strong> by {{ repair.customer_name }}
+          </p>
+          <p class="card-text">
+            {{ repair.repair_problem | truncatechars:100 }}
+          </p>
+          <p class="card-text">Price:{{ repair.due }}</p>
+          <p class="card-text">{{ repair.repair_status }}</p>
+          <form action="completeform/{{repair.repair_id}}/paid" method="post" class="card-text">
+            {% csrf_token %}
+            <div class ="a-child">
+              {% for field in form %}
+              {{ field }}
+              {% endfor %}
+            </div>
+            <button type="submit"
+              style="
+              background-color:black;
+              color:white;
+              height:30px;
+              margin:5px;
+              "
+              onclick="return confirm('Are you sure you want to confirm?');"
+            >OK</button>
+          </form>
+        </div>
+      </li>
+    </a>
+    {% endfor %}
+    <div class="pagination">
+      <span class="step-links">
+        {% if outrepaired_page_obj.has_previous %}
+        <a href="?page=1">&laquo; First</a>
+        <a href="?page={{ outrepaired_page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span class="current">
+          Page {{ outrepaired_page_obj.number }} of {{ outrepaired_page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if outrepaired_page_obj.has_next %}
+        <a href="?page={{ outrepaired_page_obj.next_page_number }}">Next</a>
+        <a href="?page={{ outrepaired_page_obj.paginator.num_pages }}">Last &raquo;</a>
+        {% endif %}
+      </span>
+    </div>
+
   </ol>
 
   <ol id="repaired_repairs" style="display: {% if repair_list_display == 'incomplete' %}block{% else %}none{% endif %};">
