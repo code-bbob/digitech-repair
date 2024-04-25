@@ -46,6 +46,10 @@ class Repair(models.Model):
     repair_profit = models.FloatField(null=True,blank=True)
     technician_profit = models.FloatField(null=True,blank=True)
     my_profit = models.FloatField(null=True, blank=True)
+    outside_name = models.CharField(max_length=30,null=True,blank=True)
+    outside_desc = models.CharField(max_length=30,null=True,blank=True)
+    taken_by = models.CharField(max_length=30,null=True,blank=True)
+    outside_cost = models.FloatField(null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if not self.pk:  # Check if the instance is new
