@@ -7,9 +7,9 @@
   <h2 class="h1">Repairs:</h2>
   <br />
   <div>
-    <a href="#" class="rect" onclick="showRepairs('incomplete')">Ongoing Repairs</a>
-    <a href="#" class="rect" onclick="showRepairs('repaired')">Call to customers</a>
-    <a href="#" class="rect" onclick="showRepairs('completed')">Completed Repairs</a>
+    <a href="#" class="rect" id="incomplete" onclick="showRepairs('incomplete')">Ongoing Repairs</a>
+    <a href="#" class="rect" id="repaired" onclick="showRepairs('repaired')">Call to customers</a>
+    <a href="#" class="rect" id="completed" onclick="showRepairs('completed')">Completed Repairs</a>
 
   </div>
   <br>
@@ -104,7 +104,7 @@
           </p>
           <p class="card-text">Price:{{ repair.due }}</p>
           <p class="card-text">{{ repair.repair_status }}</p>
-          <p class="card-text">{{ repair.amount_paid }}</p>
+          <p class="card-text">{{ repair.amount_paid|add:repair.advance_paid }}</p>
         </div>
       </li>
     </a>
@@ -203,6 +203,12 @@
 
     // Show the selected repair list
     document.getElementById(id + '_repairs').style.display = 'block';
+
+    document.querySelectorAll('.rect').forEach(rec => {
+      rec.style.backgroundColor = 'black';
+    });
+
+    document.getElementById(id).style.backgroundColor = 'darkgray';
 
     // Save the display state to local storage
     localStorage.setItem('repairListDisplay', id);
