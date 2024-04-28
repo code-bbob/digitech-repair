@@ -10,25 +10,42 @@ bibhab the great
     <h3>Enter the specs of the repair.</h3>
     <br><br>
     <div>
-        <form action = "" method = "post">
-          {%csrf_token%}
-          {{form.as_p}}
-          <script>
-            function calculateTotal() {
-                var totalAmount = parseFloat(document.getElementById('id_total_amount').value);
-                var advancePaid = parseFloat(document.getElementById('id_advance_paid').value);
-                var due = totalAmount - advancePaid;
-                document.getElementById('id_due').value = due;
-            }
-    
-            document.getElementById('id_total_amount').addEventListener('input', calculateTotal);
-            document.getElementById('id_advance_paid').addEventListener('input', calculateTotal);
-        </script>
-          <input type="submit" style="background-color:black;">
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ repair_form.as_p }}
+
+            <div id="additionalForm" style="display: none;">
+                {{ outside_form.as_p }}
+            </div>
+
+            <script>
+                function calculateTotal() {
+                    var totalAmount = parseFloat(document.getElementById('id_total_amount').value);
+                    var advancePaid = parseFloat(document.getElementById('id_advance_paid').value);
+                    var due = totalAmount - advancePaid;
+                    document.getElementById('id_due').value = due;
+                }
+
+                function additionalForm() {
+                    var repairStatus = document.getElementById('id_repair_status').value;
+                    console.log(repairStatus);
+                    if (repairStatus === "Outrepaired") {
+                        document.getElementById('additionalForm').style.display = 'block';
+                    } else {
+                        document.getElementById('additionalForm').style.display = 'none';
+                    }
+                }
+
+                document.getElementById('id_total_amount').addEventListener('input', calculateTotal);
+                document.getElementById('id_advance_paid').addEventListener('input', calculateTotal);
+                document.getElementById('id_repair_status').addEventListener('change', additionalForm);
+
+                // Initial check to show/hide additional form based on initial value
+                additionalForm();
+            </script>
+            <input type="submit" style="background-color: black;">
         </form>
-      </div>
+    </div>
 </div>
-
-
 
 {% endblock %}

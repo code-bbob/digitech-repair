@@ -17,11 +17,11 @@
   <h2 class="h1">Repairs:</h2>
   <br />
   <div>
-    <a href="#" class="rect" onclick="showRepairs('incomplete')">Ongoing Repairs</a>
-    <a href="#" class="rect" onclick="showRepairs('outrepaired')">Repair Outside</a>
-    <a href="#" class="rect" onclick="showRepairs('repaired')">Call to customers</a>
-    <a href="#" class="rect" onclick="showRepairs('completed')">Completed Repairs</a>
-    <a href="#" class="rect" onclick="showRepairs('unrepairable')">Unrepairable Repairs</a>
+    <a href="#" class="rect" id='incomplete' onclick="showRepairs('incomplete')">Ongoing Repairs</a>
+    <a href="#" class="rect" id='outrepaired' onclick="showRepairs('outrepaired')">Repair Outside</a>
+    <a href="#" class="rect" id='repaired' onclick="showRepairs('repaired')">Call to customers</a>
+    <a href="#" class="rect" id='completed' onclick="showRepairs('completed')">Completed Repairs</a>
+    <a href="#" class="rect" id='unrepairable' onclick="showRepairs('unrepairable')">Unrepairable Repairs</a>
 
 
   </div>
@@ -314,6 +314,7 @@
 
   function showRepairs(id) {
     // Hide all repair lists
+    console.log(id)
     document.querySelectorAll('ol').forEach(ol => {
       ol.style.display = 'none';
     });
@@ -326,6 +327,7 @@
     });
 
     document.getElementById(id).style.backgroundColor = 'darkgray';
+    console.log("red")
 
     // Save the display state to local storage
     localStorage.setItem('repairListDisplay', id);

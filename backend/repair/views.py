@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect 
 from .models import Repair
-from .forms import RepairForm, SubmitForm
+from .forms import RepairForm, SubmitForm, OutsideForm
 from django.http import HttpResponse
 from django.core.paginator import Paginator
 from django.contrib.auth import authenticate, login
@@ -108,14 +108,16 @@ def Search(request):
     
 def Form(request):
     repairs = Repair.objects.all()
-    form = RepairForm()
+    repair_form = RepairForm()
+    outside_form = OutsideForm()
+
 
     if request.method  == 'POST':
         form = RepairForm(request.POST)
         if form.is_valid():
             repair =form.save()
             return redirect(f'/repair/product/{repair.repair_id}')
-    context = {'form':form}
+    context = {'repair_form':repair_form,'outside_form':outside_form}
     return render(request,'repair/form.html', context)
 
 def UpdateStatus(request,repair_id,status):

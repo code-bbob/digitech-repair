@@ -10,3 +10,8 @@ class SubmitForm(ModelForm):
     class Meta:
         model=Repair
         fields = ['amount_paid']
+
+class OutsideForm(ModelForm):
+    class Meta:
+        model = Repair
+        fields = ['outside_name','outside_desc','taken_by','outside_cost']
