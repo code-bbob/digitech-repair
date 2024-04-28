@@ -4,13 +4,14 @@ from .forms import RepairForm, SubmitForm
 from django.http import HttpResponse
 from django.core.paginator import Paginator
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 
 
+@login_required(login_url='/login/')
 def RepairHome(request):
 
     form = SubmitForm()
     if request.method == 'GET':
-        repairs = Repair.objects.exclude(repair_status="Completed").order_by('-id')
         completed_repairs = Repair.objects.filter(repair_status="Completed").order_by('-id')
         incomplete_repairs = Repair.objects.filter(repair_status="Not repaired").order_by('-id')
         completed_paginator = Paginator(completed_repairs, 10)
@@ -21,11 +22,72 @@ def RepairHome(request):
         completed_page_obj = completed_paginator.get_page(page_number)
         incomplete_page_obj = incomplete_paginator.get_page(page_number)
         repaired_page_obj = repaired_paginator.get_page(page_number)
-        context = {'completed_page_obj': completed_page_obj,'incomplete_page_obj':incomplete_page_obj,'repaired_page_obj':repaired_page_obj,'form': form}
+        user = request.user
+        groups = user.groups.all()
+        print(groups)
+        context = {'completed_page_obj': completed_page_obj,'incomplete_page_obj':incomplete_page_obj,'repaired_page_obj':repaired_page_obj,'form': form,'groups':groups}
         return render(request,'repair/arko.html', context)
 
     else:
         pass
+
+@login_required(login_url='/login/')
+def RepairHometest(request):
+
+    form = SubmitForm()
+    if request.method == 'GET':
+        date = request.GET.get('date')
+        if date:
+            completed_repairs = Repair.objects.filter(repair_status="Completed",received_date=date).order_by('-id')
+            completed_paginator = Paginator(completed_repairs, 10)
+            incomplete_repairs = Repair.objects.filter(repair_status="Not repaired",received_date=date).order_by('-id')
+            incomplete_paginator = Paginator(incomplete_repairs,10)
+            repaired_repairs = Repair.objects.filter(repair_status="Repaired",received_date=date).order_by('-id')
+            repaired_paginator = Paginator(repaired_repairs,10)
+            unrepairable_repairs = Repair.objects.filter(repair_status="Unrepairable",received_date=date).order_by('-id')
+            unrepairable_paginator = Paginator(unrepairable_repairs,10)
+            outrepaired_repairs = Repair.objects.filter(repair_status="Outrepaired",received_date=date).order_by('-id')
+            outrepaired_paginator = Paginator(outrepaired_repairs,10)
+            page_number = request.GET.get("page")
+            completed_page_obj = completed_paginator.get_page(page_number)
+            incomplete_page_obj = incomplete_paginator.get_page(page_number)
+            repaired_page_obj = repaired_paginator.get_page(page_number)
+            unrepairable_page_obj = unrepairable_paginator.get_page(page_number)
+            outrepaired_page_obj = outrepaired_paginator.get_page(page_number)
+            user = request.user
+            groups = user.groups.all()
+            print("88888888888888888888888888888",outrepaired_page_obj)
+            context = {'completed_page_obj': completed_page_obj,'incomplete_page_obj':incomplete_page_obj,'repaired_page_obj':repaired_page_obj,'unrepairable_page_obj':unrepairable_page_obj, 'outrepaired_page_obj':outrepaired_page_obj , 'form': form,'groups':groups}
+            return render(request,'repair/arko.html', context)
+        
+        completed_repairs = Repair.objects.filter(repair_status="Completed").order_by('-id')
+        incomplete_repairs = Repair.objects.filter(repair_status="Not repaired").order_by('-id')
+        completed_paginator = Paginator(completed_repairs, 10)
+        repaired_repairs = Repair.objects.filter(repair_status="Repaired").order_by('-id')
+        repaired_paginator = Paginator(repaired_repairs,10)
+        incomplete_paginator = Paginator(incomplete_repairs,10)
+        unrepairable_repairs = Repair.objects.filter(repair_status="Unrepairable").order_by('-id')
+        outrepaired_repairs = Repair.objects.filter(repair_status="Outrepaired").order_by('-id')
+        outrepaired_paginator = Paginator(outrepaired_repairs,10)
+        unrepairable_paginator = Paginator(unrepairable_repairs,10)
+        print(outrepaired_paginator)
+        print(outrepaired_repairs)
+        page_number = request.GET.get("page")
+        completed_page_obj = completed_paginator.get_page(page_number)
+        incomplete_page_obj = incomplete_paginator.get_page(page_number)
+        repaired_page_obj = repaired_paginator.get_page(page_number)
+        unrepairable_page_obj = unrepairable_paginator.get_page(page_number)
+        outrepaired_page_obj = outrepaired_paginator.get_page(page_number)
+        for repairss in outrepaired_page_obj:
+            print(repairss) 
+        user = request.user
+        groups = user.groups.all()
+        context = {'completed_page_obj': completed_page_obj,'incomplete_page_obj':incomplete_page_obj,'repaired_page_obj':repaired_page_obj,'unrepairable_page_obj':unrepairable_page_obj,'outrepaired_page_obj':outrepaired_page_obj,'form': form,'groups':groups}
+        return render(request,'repair/arko.html', context)
+
+    else:
+        pass
+
 
 def Search(request):
     query = request.GET['query']
@@ -56,12 +118,21 @@ def Form(request):
     context = {'form':form}
     return render(request,'repair/form.html', context)
 
-def UpdateStatus(request,repair_id):
-    repair = Repair.objects.get(repair_id=repair_id)
-    if repair.repair_status == 'Not repaired':
-        repair.repair_status = 'Repaired'
-        repair.save()
-    return redirect('/repair/')
+def UpdateStatus(request,repair_id,status):
+    if status == 'repaired':
+        repair = Repair.objects.get(repair_id=repair_id)
+        if repair.repair_status == 'Not repaired':
+            repair.repair_status = 'Repaired'
+            repair.save()
+            return redirect('/repair/')
+    elif status == 'unrepairable':
+        repair = Repair.objects.get(repair_id=repair_id)
+        if repair.repair_status == 'Not repaired':
+            repair.repair_status = 'Unrepairable'
+            repair.save()
+            return redirect('/repair/')
+    else:
+        return HttpResponse("NOT VALID CONTACT BBOB THE GREAT")
 
 def CompleteForm(request,repair_id,condition):
     repair = Repair.objects.get(repair_id=repair_id)
