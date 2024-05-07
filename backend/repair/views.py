@@ -170,7 +170,8 @@ def UpdateForm(request, repair_id):
         else:
              return HttpResponse('Form is not valid')
 
-    context = {'form':form}
+    context = {'repair_form':form}
+    print(form)
     return render(request,'repair/form.html', context)
 
 
