@@ -21,6 +21,7 @@
     <!-- <a href="#" class="rect" id='outrepaired' onclick="showRepairs('outrepaired')">Repair Outside</a> -->
     <a href="#" class="rect" id='repaired' onclick="showRepairs('repaired')">Call to customers</a>
     <a href="#" class="rect" id='completed' onclick="showRepairs('completed')">Completed Repairs</a>
+    <a href="#" class="rect" id='unrepairable' onclick="showRepairs('unrepairable')">Unrepairable Repairs</a>
 
 
   </div>
@@ -255,6 +256,44 @@
         {% if completed_page_obj.has_next %}
         <a href="?page={{ completed_page_obj.next_page_number }}">Next</a>
         <a href="?page={{ completed_page_obj.paginator.num_pages }}">Last &raquo;</a>
+        {% endif %}
+      </span>
+    </div>
+
+  </ol>
+
+  <ol id="unrepairable_repairs" style="display: {% if repair_list_display == 'unrepairable' %}block{% else %}none{% endif %};">
+    {% for repair in unrepairable_page_obj %}
+    <a href="/repair/product/{{repair.repair_id}}" class="anchor">
+      <li>
+        <div class="repair_item">
+          <p class="card-title">
+            <strong>{{ repair.phone_model }}</strong> by {{ repair.customer_name }}
+          </p>
+          <p class="card-text">
+            {{ repair.repair_problem | truncatechars:100 }}
+          </p>
+          <p class="card-text">Price:{{ repair.due }}</p>
+          <p class="card-text">{{ repair.repair_status }}</p>
+          <p class="card-text">{{ repair.amount_paid }}</p>
+        </div>
+      </li>
+    </a>
+    {% endfor %}
+    <div class="pagination">
+      <span class="step-links">
+        {% if unrepairable_page_obj.has_previous %}
+        <a href="?page=1">&laquo; First</a>
+        <a href="?page={{ unrepairable_page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span class="current">
+          Page {{ unrepairable_page_obj.number }} of {{ unrepairable_page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if unrepairable_page_obj.has_next %}
+        <a href="?page={{ unrepairable_page_obj.next_page_number }}">Next</a>
+        <a href="?page={{ unrepairable_page_obj.paginator.num_pages }}">Last &raquo;</a>
         {% endif %}
       </span>
     </div>
